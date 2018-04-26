@@ -453,7 +453,7 @@ Page({
           that.setData({
             shopDeliveryPrice: shopDeliveryPrice
           })
-          console.log('配送起步价：', shopDeliveryPrice, res.data.data.value)
+          //console.log('配送起步价：', shopDeliveryPrice, res.data.data.value)
         }
       }
     })

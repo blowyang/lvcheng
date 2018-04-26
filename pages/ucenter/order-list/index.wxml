@@ -37,7 +37,9 @@
               <view>
                 <scroll-view class="goods-img-container" scroll-x="true">
                   <view class="img-box" wx:for-items="{{goodsMap[item.id]}}" wx:key="{{index}}">
-                    <image src="{{item.pic}}" class="goods-img"></image>
+                    <navigator url="/pages/goods-details/index?id={{item.goodsId}}" hover-class="navigator-hover">
+                      <image src="{{item.pic}}" class="goods-img" ></image>
+                    </navigator>
                   </view>
                 </scroll-view>
               </view>

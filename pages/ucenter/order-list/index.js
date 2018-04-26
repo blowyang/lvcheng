@@ -20,6 +20,7 @@ Page({
     this.getOrderStatistics();
     this.getOrderList()
   },
+  
   getOrderStatistics: function () {
     var that = this;
     wx.request({
@@ -75,7 +76,6 @@ Page({
       data: postData,
       success: (res) => {
         if (res.data.code == 0) {
-          console.log(res.data.data.orderList)
           that.setData({
             totalOrderList: res.data.data.orderList,
             logisticsMap: res.data.data.logisticsMap,
@@ -88,13 +88,10 @@ Page({
             for (let j = 0; j < res.data.data.orderList.length; j++) {
               if (res.data.data.orderList[j].status == i) {
                 tempList.push(res.data.data.orderList[j])
-                //orderList[i].push(res.data.data.orderList[j])
               }
             }
-            console.log(tempList)
             orderList.push({ 'status': i,'isnull':tempList.length === 0,'orderList':tempList})
           }
-          console.log(orderList)
           this.setData({
             orderList: orderList
           });
@@ -147,7 +144,6 @@ Page({
     var that = this;
     var orderId = e.currentTarget.dataset.id;
     var money = e.currentTarget.dataset.money;
-    //wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
       data: {
@@ -155,7 +151,6 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
-          // res.data.data.balance
           money = money - res.data.data.balance;
           if (money <= 0) {
             // 直接使用余额支付
@@ -274,7 +269,6 @@ Page({
     this.setData({ stv: this.data.stv })
   },
   _updateSelectedPage(page) {
-    console.log('_updateSelectedPage')
     let { tabs, stv, activeTab } = this.data;
     activeTab = page;
     this.setData({ activeTab: activeTab })
@@ -282,7 +276,6 @@ Page({
     this.setData({ stv: this.data.stv })
   },
   handlerTabTap(e) {
-    console.log('handlerTapTap')
     this._updateSelectedPage(e.currentTarget.dataset.index);
   }
 })

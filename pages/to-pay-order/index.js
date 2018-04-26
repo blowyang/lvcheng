@@ -28,7 +28,7 @@ Page({
           shopList = buykjInfoMem.shopList
         }
       }
-    }else{
+    } else {
       //立即购买下单
       if ("buyNow" == that.data.orderType) {
 
@@ -47,7 +47,7 @@ Page({
         }
       }
     }
-    
+
     that.setData({
       goodsList: shopList,
     });
@@ -55,7 +55,6 @@ Page({
   },
 
   onLoad: function (e) {
-    console.log("onLoad")
     var that = this;
     //显示收货地址标识
     that.setData({
@@ -65,7 +64,6 @@ Page({
   },
 
   getDistrictId: function (obj, aaa) {
-    console.log("getDistrictId")
     if (!obj) {
       return "";
     }
@@ -76,7 +74,7 @@ Page({
   },
 
   createOrder: function (e) {
-    console.log("createOrder")
+
     var that = this;
     wx.showLoading();
     var loginToken = app.globalData.token // 用户登录 token
@@ -152,15 +150,15 @@ Page({
         }
         // 配置模板消息推送
         var postJsonString = {};
-          //订单关闭
-        postJsonString.keyword1 = { value: res.data.data.orderNumber, color: '#173177'  }
+        //订单关闭
+        postJsonString.keyword1 = { value: res.data.data.orderNumber, color: '#173177' }
         postJsonString.keyword2 = { value: res.data.data.dateAdd, color: '#173177' }
-        postJsonString.keyword3 = { value: res.data.data.amountReal + '元', color: '#173177'}
+        postJsonString.keyword3 = { value: res.data.data.amountReal + '元', color: '#173177' }
         postJsonString.keyword4 = { value: '已关闭', color: '#173177' }
         postJsonString.keyword5 = { value: '您可以重新下单，请在30分钟内完成支付', color: '#173177' }
         app.sendTempleMsg(res.data.data.id, -1,
           'rNDYCpswxz1LmoYX1LwnEH92Bw1uYUnjrXuVWP8T2WU', e.detail.formId,
-          'pages/classification/index', JSON.stringify(postJsonString),'keyword4.DATA');
+          'pages/classification/index', JSON.stringify(postJsonString), 'keyword4.DATA');
         //付款成功通知
         /**/
         postJsonString = {};
@@ -173,28 +171,39 @@ Page({
         app.sendTempleMsg(res.data.data.id, 1,
           'xlB8KGz0V5mWyGecP6teTWOF0VR3db731OHiw6iPfss', e.detail.formId,
           'pages/ucenter/order-details/index?id=' + res.data.data.id, JSON.stringify(postJsonString), 'keyword5.DATA');
-          
-          //订单已发货待确认通知
+
+        //订单已发货待确认通知
         postJsonString = {};
-        postJsonString.keyword1 = { value: res.data.data.orderNumber, color: '#173177'}
-        postJsonString.keyword2 = { value: res.data.data.dateAdd, color: '#173177'}
+        postJsonString.keyword1 = { value: res.data.data.orderNumber, color: '#173177' }
+        postJsonString.keyword2 = { value: res.data.data.dateAdd, color: '#173177' }
         postJsonString.keyword3 = { value: res.data.data.amountReal + '元', color: '#173177' }
-        postJsonString.keyword4 = { value: '已发货'}
+        postJsonString.keyword4 = { value: '已发货' }
         postJsonString.keyword5 = { value: '您的订单已发货，请保持手机通常，如有任何问题请联系客服13952810716', color: '#173177' }
         app.sendTempleMsg(res.data.data.id, 2,
           'inirLzp_1A6ZfDwGO-E67_kAmLEnv2HMUvE6vbDmKUg', e.detail.formId,
-          'pages/ucenter/order-details/index?id=' + res.data.data.id, JSON.stringify(postJsonString),'keyword4.DATA');
+          'pages/ucenter/order-details/index?id=' + res.data.data.id, JSON.stringify(postJsonString), 'keyword4.DATA');
 
         // 下单成功，跳转到订单管理界面
         wx.redirectTo({
           url: "/pages/ucenter/order-list/index"
         });
-      }
+        //添加搜藏
+        
+        for (var i=0;i<that.data.goodsList.length;i++){
+          var temGoodsId = that.data.goodsList[i].goodsId
+          wx.request({
+            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/fav/add',
+            data: {
+              token: app.globalData.token,
+              goodsId: temGoodsId
+            },
+          })
+        }      
+      }       
     })
 
   },
   initShippingAddress: function () {
-    console.log("initShippingAddress")
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/default',
@@ -256,46 +265,16 @@ Page({
       url: "/pages/select-address/index"
     })
   },
-  /*
-  getMyCoupons: function () {
-    console.log("getMyCoupons")
-    var that = this;
-    var goodsList=that.data.goodsList
-    console.log(goodsList)
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/my',
-      data: {
-        token: app.globalData.token,
-        status: 0
-      },
-      success: function (res) {
-        console.log("getMyCoupons request success")
-        console.log(res)
-        if (res.data.code == 0) {
-          var coupons = res.data.data.filter(entity => {
-            return entity.moneyHreshold <= that.data.allGoodsAndYunPrice;
-          });
-          if (coupons.length > 0) {
-            that.setData({
-              hasNoCoupons: false,
-              coupons: coupons
-            });
-          }
-        }
-      }
-    })
-  },
-  */
+  
   getMyCoupons: function () {
     console.log("getMyCoupons")
     var that = this;
     /**/
-    if ("buykj" == that.data.orderType){
+    if ("buykj" == that.data.orderType) {
       return
     }
-    
+
     var goodsList = that.data.goodsList
-    console.log(goodsList)
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/my',
       data: {
@@ -303,38 +282,29 @@ Page({
         status: 0
       },
       success: function (res) {
-        console.log("getMyCoupons request success")
-        console.log(res)
         if (res.data.code == 0) {
-          var coupons=[]
+          var coupons = []
           var temCoupons = res.data.data
           temCoupons = temCoupons.filter(entity => {
             return entity.moneyHreshold <= that.data.allGoodsAndYunPrice;
           })
-          for (var i = 0; i < temCoupons.length;i++){
+          for (var i = 0; i < temCoupons.length; i++) {
             var coupon = temCoupons[i]
-            if (coupon.refId==undefined){
+            if (coupon.refId == undefined) {
               coupons.push(coupon)
             }
-            var check=false
-            for (var j = 0; j < goodsList.length;j++){
+            var check = false
+            for (var j = 0; j < goodsList.length; j++) {
               var goodsId = goodsList[j].goodsId
-              if (goodsId == coupon.refId){
+              if (goodsId == coupon.refId) {
                 check = true
               }
             }
-            if (check){
+            if (check) {
               coupons.push(coupon)
             }
           }
-          /*
-          for (var i = 0; i < goodsList.length;i++){
-            var goodsId = goodsList[i].goodsId
-            coupons = coupons.filter(entity => {
-              return entity.refId == goodsId;
-            });
-          }
-          */
+          
           if (coupons.length > 0) {
             that.setData({
               hasNoCoupons: false,
@@ -346,7 +316,6 @@ Page({
     })
   },
   bindChangeCoupon: function (e) {
-    console.log("bindChangeCoupon")
     const selIndex = e.detail.value[0] - 1;
     if (selIndex == -1) {
       this.setData({
@@ -355,7 +324,6 @@ Page({
       });
       return;
     }
-    //console.log("selIndex:" + selIndex);
     this.setData({
       youhuijine: this.data.coupons[selIndex].money,
       curCoupon: this.data.coupons[selIndex]

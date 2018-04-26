@@ -228,7 +228,7 @@ Page({
             }
           }
           goodsList.push({ 'id': id, 'key': key, 'name': name, 'goods': goodsTemp })
-          console.log("你好," + categories[i].name)
+          //console.log("你好," + categories[i].name)
         }
 
         that.setData({
