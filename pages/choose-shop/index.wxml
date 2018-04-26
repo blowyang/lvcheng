@@ -1,0 +1,39 @@
+<view class="container">
+  <form bindsubmit="bindSave">
+    <view class="form-box">
+
+      <view class="row-wrap" bindtap="selectCity">
+        <view class="label">选择区域</view>
+        <picker bindchange="bindPickerProvinceChange" range="{{provinces}}" value='{{defaultProvinceCode}}'>
+          <view class="picker {{selProvince=='请选择'?'hui':''}}">
+            {{selProvince}}
+          </view>
+        </picker>
+        <picker bindchange="bindPickerCityChange" range="{{citys}}" value='{{defaultCityCode}}'>
+          <view class="picker {{selCity=='请选择'?'hui':''}}">
+            {{selCity}}
+          </view>
+        </picker>
+        <picker bindchange="bindPickerChange" range="{{districts}}" value='{{defaultCountyCode}}'>
+          <view class="picker {{selDistrict=='请选择'?'hui':''}}">
+            {{selDistrict}}
+          </view>
+        </picker>
+      </view>
+      <view class="addr-details">
+        <view class="label">选择酒店</view>
+        <view class="label-right">
+          <picker bindchange="bindPickerShopChange" range="{{shops}}" value='{{defaultShopCode}}'>
+            <view class="picker {{selShop=='请先选择区域'?'hui':''}}">
+              {{selShop}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+    </view>
+    <button disabled='{{disabled}}' type="warn" class="save-btn" formType="submit">确定</button>
+    
+    <button type="default" class="cancel-btn" bindtap="bindCancel">取消</button>
+  </form>
+</view>

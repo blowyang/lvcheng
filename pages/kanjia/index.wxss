@@ -1,0 +1,444 @@
+.container{
+  width: 100%;
+  height: 100%;
+}
+.kanjia-header{
+  width:100%;
+  height:380px;
+  background-image:linear-gradient(-130deg,#B4A078 0,#E7DAC0 100%);
+}
+.kanjia-header-user{
+  width:100%;
+  text-align:center;
+  padding-top:15px;
+  color:#fff;
+  margin-bottom: 10px
+}
+.kanjia-header-user image{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  box-shadow:0 0 0.4rem 0 rgba(0,0,0,.15);
+}
+.kanjia-header-user .user-name{
+  font-size:30rpx;
+  padding-bottom:5px;
+}
+.kanjia-header-user .user-info{
+  font-size:26rpx;
+  font-weight:300;
+}
+.kanjia-header-goods{
+  width:88%;
+  height: 95px;
+  background-color:#F6EDDE;
+  margin:0 auto;
+  border-radius:6rpx;
+  box-shadow: 0 0 0.4rem 0 rgba(0,0,0,.15);
+}
+.kanjia-header-goods .goods-image{
+  width:85px;
+  height:85px;
+  border-radius:6rpx;
+  float:left;
+  padding-top:5px;
+  padding-left:5px;
+}
+.kanjia-header-goods .goods-info{
+  float:left;
+  width:64%;
+  color: #B4A078;
+  padding-left:10px;
+  padding-top:10px;
+  font-size:30rpx;
+}
+.goods-info .goods-title{
+  width:100%;
+  height:44px;
+  color: #333;
+}
+.goods-info .goods-min{
+  float:left;
+  font-size:26rpx;
+  padding-top:2px;
+  font-weight:300;
+}
+.goods-info .goods-min text{
+  font-size: 32rpx;
+}
+.goods-info .good-max{
+  float:left;
+  color: #999;
+  font-size:26rpx;
+  padding-top:5px;
+  font-weight:300;
+  padding-left:40px;
+  text-decoration:line-through;
+}
+.kanjia-header-btn{
+  width: 100%;
+  text-align: center;
+}
+.kanjia-header-btn .btn-info{
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 300;
+  margin-top: 15px;
+}
+.kanjia-header-btn .btn-two{
+  margin-top:15px;
+}
+.btn-info .min{
+  font-size:32rpx;
+  padding-left:2px;
+  padding-right:2px;
+}
+.btn-info .max{
+  padding-left:2px;
+  padding-right:2px;
+}
+.btn-two .btn-me{
+  display:inline-block;
+  color:#B4A078;
+  font-size:28rpx;
+  border:1px solid #B4A078;
+  font-weight:300;
+  border-radius:6rpx;
+  margin-left:5px;
+  width:100px;
+  height:37px;
+  line-height:37px;
+}
+.btn-two .btn-he{
+  display:inline-block;
+  font-size:28rpx;
+  font-weight:300;
+  border-radius:6rpx;
+  background-color:#B4A078;
+  color:#fff;
+  margin-right:5px;
+  width:150px;
+  height:38px;
+  line-height:38px;
+}
+.btn-two .btn-he-no{
+  background-color: #b0a48d;
+}
+.btn-two .btn-succse{
+  color:#fff;
+  font-size:28rpx;
+  font-weight:300;
+  width:240px;
+  margin:0 auto;
+  height:38px;
+  background-color:#B4A078;
+  line-height:38px;
+  border-radius:6rpx;
+}
+.kanjia-header-btn .btn-tiame{
+  width:100%;
+  text-align:center;
+  color:#B4A078;
+  font-size:24rpx;
+  margin-top:15px;
+}
+.kanjia-active{
+  width: 100%;
+  position: relative;
+}
+.kanjia-active text{
+  width:0;
+  height:0;
+  display:block;
+  border-left:15px solid rgba(0,0,0,0);
+  border-right:15px solid rgba(0,0,0,0);
+  border-top:15px solid rgba(0,0,0,0);
+  border-bottom:20px solid #fff;
+  position:absolute;
+  top:-28px;
+  left:46%;
+}
+.kanjia-help{
+  width: 100%;
+  margin-top: 15px;
+}
+.kanjia-help-title{
+  width:100%;
+  color:#B4A078;
+  font-size:26rpx;
+  text-align:center;
+  height:30px;
+  margin-bottom:10px;
+  font-weight: 300;
+}
+.kanjia-help-list{
+  width:100%;
+  height:60px;
+  border-bottom:1px dashed #F6EDDE;
+  margin-bottom:10px;
+}
+.kanjia-help-list .avatar{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  float:left;
+  margin-left:15px;
+}
+.help-list-info{
+  float:left;
+  width:51%;
+  padding-left:10px;
+  font-size:28rpx;
+  padding-top:5px;
+}
+.help-list-info .list-info-name{
+  font-size:28rpx;
+  color:#333;
+  padding-bottom:5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.help-list-info .list-info-time{
+  color:#999;
+  font-size:22rpx;
+}
+.help-info-money{
+  float:left;
+  width:25%;
+  font-size:22rpx;
+  padding-top:10px;
+}
+.help-info-money image{
+  width:20px;
+  height:20px;
+  float: left;
+}
+.help-info-money .kjmoney{
+  margin-top:2px;
+  float:left;
+  padding-left:2px;
+  color:#B4A078;
+}
+.help-info-money .kjmoney text{
+  font-size: 24rpx;
+  font-weight: 600;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+/*----------弹窗组件样式----------*/
+.show-pop{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  background-color:rgba(0,0,0,.5);
+}
+/*发起砍价弹窗*/
+.show-pop-box{
+  width:60%;
+  height:250px;
+  color:#fff;
+  margin:0 auto;
+  margin-top:32%;
+  border-radius:6rpx;
+  background-image:linear-gradient(-130deg,#B4A078 0,#E7DAC0 100%);
+  box-shadow: 0 0 0.4rem 0 rgba(0,0,0,.15);
+  position: relative;
+}
+.show-pop-box .pop-box-close{
+  width:25px;
+  height:25px;
+  position:absolute;
+  right:4px;
+  top:2px;
+}
+.show-pop-box .pop-box-info{
+  width:100%;
+  text-align:center;
+  padding-top:40px;
+  font-weight:300;
+}
+.show-pop-box .pop-box-info .pop-box-title{
+  font-size:40rpx;
+  padding-bottom:5px;
+}
+.show-pop-box .pop-box-info .pop-box-kanjia{
+  font-size:30rpx;
+  padding-bottom:5px;
+}
+.show-pop-box .pop-box-info .pop-box-text{
+  font-size:28rpx;
+}
+.show-pop-box .pop-box-share{
+  width:100%;
+  text-align:center;
+  padding-top:30px;
+  font-weight: 300;
+  color:#B4A078;
+  position: relative;
+}
+.show-pop-box .pop-box-share .pop-box-btn{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  position:absolute;
+  left:40px;
+  opacity:0;
+}
+.show-pop-box .pop-box-share .share-user{
+  display:inline-block;
+  font-size:22rpx;
+  padding-right:20px;
+}
+.show-pop-box .pop-box-share .share-img{
+  display:inline-block;
+  font-size:22rpx;
+  padding-left: 20px;
+}
+.show-pop-box .pop-box-share .share-user image{
+  width:20px;
+  height:20px;
+  background-color:#B4A078;
+  padding:10px;
+  border-radius:50%;
+  display: block;
+  margin-left:5px;
+  margin-bottom:5px;
+}
+.show-pop-box .pop-box-share .share-img image{
+  width:25px;
+  height:25px;
+  background-color:#B4A078;
+  padding:8px;
+  border-radius:50%;
+  display:block;
+  margin-left:5px;
+  margin-bottom:5px;
+}
+/*生成海报弹窗*/
+.banner-pop{
+  width:100%;
+  height:100%;
+  margin:0 auto;
+  text-align:center;
+  background-color:#fff;
+}
+.banner-image{
+  width: 100%;
+  height: 100%;
+}
+.banner-image .banner-user-avatar{
+  width:100%;
+  padding-top:15px;
+  padding-bottom:5px;
+}
+.banner-image .banner-user-avatar image{
+  width:50px;
+  height:50px;
+  margin:0 auto;
+  display:block;
+  border-radius:50%;
+  border:1px solid #f5f5f5;
+}
+.banner-image .banner-user-name {
+  padding-bottom:5px;
+  font-size:30rpx;
+  color:#333;
+}
+.banner-image .banner-user-info{
+  padding-bottom:8px;
+  font-size:26rpx;
+  color:#666;
+}
+.banner-image .box-lien{
+  border:1px solid #eee;
+  width:250px;
+  margin:0 auto;
+  margin-bottom:10px;
+  border-radius: 6rpx;
+}
+.box-lien .banner-goods-title{
+  font-size:26rpx;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+.box-lien .goods-min{
+  padding-bottom:10px;
+  color:#b5272d;
+  font-size:24rpx;
+}
+.box-lien .goods-min text{
+font-size: 28rpx;
+}
+.banner-image .banner-goods-image{
+  width:250px;
+  height:230px;
+  border-top-left-radius:6rpx;
+  border-top-right-radius:6rpx;
+}
+.banner-image .qr-code{
+  width:130px;
+  height:130px;
+}
+.banner-pop .banner-btn{
+  background-image:linear-gradient(-130deg,#B4A078 0,#E7DAC0 100%);
+  margin-top:5px;
+  height:40px;
+  color:#fff;
+  line-height:40px;
+  font-size:30rpx;
+  font-weight:300;
+  border-radius:6rpx;
+}
+/*受邀砍价弹窗*/
+.show-share-box{
+  width:60%;
+  height:200px;
+  margin:0 auto;
+  margin-top:40%;
+  text-align:center;
+  border-radius:6rpx;
+  background-image:linear-gradient(-130deg,#B4A078 0,#E7DAC0 100%);
+  box-shadow:0 0 0.4rem 0 rgba(0,0,0,.15);
+  position:relative;
+}
+.show-share-box .share-box-close{
+  width:25px;
+  height:25px;
+  position:absolute;
+  right:4px;
+  top:2px;
+}
+.show-share-box .share-box-avatar{
+  width:60px;
+  height:60px;
+  position:absolute;
+  top:-30px;
+  left:37%;
+  border-radius:50%;
+  box-shadow: 0 0 0.4rem 0 rgba(0,0,0,.15);
+}
+.show-share-box .share-box-name{
+  padding-top:40px;
+  color:#fff;
+  font-size:28rpx;
+}
+.show-share-box .share-box-text{
+  font-size:32rpx;
+  padding-top:25px;
+  color:#fff;
+  font-weight:300;
+}
+.show-share-box .share-box-btn{
+  color:#fff;
+  width:100px;
+  height:35px;
+  margin:0 auto;
+  background-color:#B4A078;
+  margin-top:25px;
+  font-size:28rpx;
+  line-height:35px;
+  font-weight:300;
+  border-radius:50rpx;
+}
