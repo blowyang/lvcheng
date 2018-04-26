@@ -337,7 +337,7 @@ App({
     userInfo: null,
     subDomain: "zhiwei",// 商城后台id
     version: "1.8",
-    shareProfile: '   一流的服务，做超新鲜的水果' // 首页转发的时候术语
+    shareProfile: '  一次旅行不仅仅是一次出行，而是一个过程，一次发现' // 首页转发的时候术语
   },
   // 根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒
   func: {
