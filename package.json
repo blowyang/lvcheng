@@ -1,12 +1,12 @@
 {
-  "name": "甜果果小铺",
-  "description": "馆陶水果外卖专送",
+  "name": "旅程优选",
+  "description": "本地综合商业平台",
   "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "AK47",
+  "author": "blowyang",
   "license": "MIT",
   "dependencies": {
     "@minui/wxc-abnor": "^1.0.5",

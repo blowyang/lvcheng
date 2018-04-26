@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.6.6",
 	"appid": "wx0c40c6e56cd197ff",
-	"projectname": "%E9%85%92%E5%BA%97%E4%BC%98%E9%80%89-offline-minUI",
+	"projectname": "lvchengyouxuan-offline-minUI",
 	"condition": {
 		"search": {
 			"current": -1,
