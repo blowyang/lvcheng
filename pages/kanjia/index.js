@@ -322,18 +322,64 @@ Page({
     })
   },
   gopay: function () {
-    var id = this.data.id;
+    var that=this
+    //var id = this.data.id;
     console.log('yang')
-    console.log(app.globalData.uid)
-    var buykjInfo = this.buliduBuykjInfo();
-    wx.setStorage({
-      key: "buykjInfo",
-      data: buykjInfo
-    })
+    console.log(that.data.id)
+    wx.request({
+      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/list',
+      data: {
+        token: app.globalData.token,
+      },
+      success: function (res) {
+        console.log(res.data)
+        var check=true
+        if(res.data.code==0){
+          var goodsMap = res.data.data.goodsMap
+          var orderList = res.data.data.orderList
+          for (var i = 0; i < orderList.length; i++) {
+            var order = orderList[i]
+            if (order.status != -1) {
+              var goods = goodsMap[order.id]
+              for (var j = 0; j < goods.length; j++) {
+                var good = goods[j]
+                if (good.goodsId == that.data.id) {
+                  check = false
+                }
+              }
+            }
 
-    wx.navigateTo({
-      url: "/pages/to-pay-order/index?orderType=buykj"
+          }
+        }
+        
+        if(check){
+          var buykjInfo = that.buliduBuykjInfo();
+          wx.setStorage({
+            key: "buykjInfo",
+            data: buykjInfo
+          })
+
+          wx.navigateTo({
+            url: "/pages/to-pay-order/index?orderType=buykj"
+          })
+        }else{
+          wx.showToast({
+            title: '只能购买一次',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+
+      },//success
+      fail:function(res){
+        wx.showToast({
+          title: '稍后再试',
+          icon: 'none',
+          duration: 2000
+        })
+      }
     })
+    
   },
   buliduBuykjInfo: function () {
     var shopCarMap = {};
