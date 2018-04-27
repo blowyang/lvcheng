@@ -323,6 +323,8 @@ Page({
   },
   gopay: function () {
     var id = this.data.id;
+    console.log('yang')
+    console.log(app.globalData.uid)
     var buykjInfo = this.buliduBuykjInfo();
     wx.setStorage({
       key: "buykjInfo",
