@@ -323,16 +323,13 @@ Page({
   },
   gopay: function () {
     var that=this
-    //var id = this.data.id;
-    console.log('yang')
-    console.log(that.data.id)
+    
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/list',
       data: {
         token: app.globalData.token,
       },
       success: function (res) {
-        console.log(res.data)
         var check=true
         if(res.data.code==0){
           var goodsMap = res.data.data.goodsMap

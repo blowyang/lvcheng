@@ -104,7 +104,7 @@ Page({
     this.setData({
       classifyViewed: id
     });
-    console.log('id:', this.data.classifyViewed)
+    //console.log('id:', this.data.classifyViewed)
     var that = this;
     setTimeout(function () {
       for (let i = 0; i < that.data.categories.length; i++) {
@@ -315,7 +315,7 @@ Page({
                 }
               }
               goodsList.push({ 'id': id, 'key': key, 'name': name, 'goods': goodsTemp })
-              console.log("你好," + categories[i].name)
+              //console.log("你好," + categories[i].name)
             }
             that.setData({
               goodsList: goodsList,
@@ -391,9 +391,6 @@ Page({
         }
 
 
-        console.log('getGoods----------------------')
-        console.log(goods)
-
         var page = that.data.page;
         var pageSize = that.data.pageSize;
         for (let i = 0; i < goods.length; i++) {
@@ -404,8 +401,6 @@ Page({
         that.setData({
           goods: goods,
         });
-        console.log('getGoodsReputation----------------------')
-        console.log(goods)
         var categories = that.data.categories
         var goodsList = [],
           id,
@@ -423,7 +418,7 @@ Page({
             }
           }
           goodsList.push({ 'id': id, 'key': key, 'name': name, 'goods': goodsTemp })
-          console.log("你好," + categories[i].name)
+          //console.log("你好," + categories[i].name)
         }
 
         that.setData({
@@ -432,8 +427,6 @@ Page({
           activeCategoryId: categories[0].id,
         })
 
-        console.log('getGoodsList----------------------')
-        console.log(that.data.goodsList)
         wx.showToast({
           title: '所有商品加载完成',
           icon: 'success',
@@ -444,7 +437,7 @@ Page({
         that.setData({
           onLoadStatus: false,
         })
-        console.log('33')
+        //console.log('33')
       }
     })
   },

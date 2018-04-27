@@ -39,7 +39,7 @@ App({
           var distance = that.func.getDistance(latitude, longitude, shoplatitude, shoplongitude)
           if (res.code != 0) {    
             that.globalData.distance = distance
-            console.log(distance)
+            //console.log(distance)
             return
           }
           var shops = res.data
@@ -101,7 +101,6 @@ App({
       fail: function () {
         that.globalData.onLoadStatus = false
         wx.hideLoading()
-        console.log('11')
       }
     })
     // 获取砍价设置
