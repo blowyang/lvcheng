@@ -87,6 +87,8 @@ Page({
   gettapList: function (cmsid) {
     var that = this;
     var cityName = app.globalData.cityName
+    var districtName = app.globalData.districtName
+    
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/cms/category/list',
       success:function(res){
@@ -100,8 +102,7 @@ Page({
             }
           }
         }
-        console.log('yang')
-        console.log(categorys)
+        
         if (categorys.length>0){
           for (var j = 0; j < categorys.length;j++){
             wx.request({
@@ -112,10 +113,35 @@ Page({
               success: function (res) {
                 var content = [];
                 if (res.data.code == 0) {
-                  for (var i = 0; i < res.data.data.length; i++) {
-                    content.push(res.data.data[i]);
+                  var contentsList = res.data.data
+                  for (var i = 0; i < contentsList.length; i++) {
+                    var content_ = contentsList[i]
+                    var tags = content_.tags.split(',');
+                    var check=false
+                    for (var j=0;j<tags.length;j++){
+                      if (districtName==tags[j]){
+                        check=true
+                      }
+                    }
+                    if(check){
+                      content.push(content_);
+                    }
+                    
                   }
+                  if (content.length == 0) {
+                    for (var i = 0; i < contentsList.length; i++) {
+                      var content_ = contentsList[i]
+                      content.push(content_)
+                    }
+                  }
+
                 }
+                that.setData({
+                  contents: content
+                });
+              },
+              fail:function(){
+                var content = [];
                 that.setData({
                   contents: content
                 });
