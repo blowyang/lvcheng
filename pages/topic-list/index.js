@@ -118,6 +118,7 @@ Page({
                     var content_ = contentsList[i]
                     var tags = content_.tags.split(',');
                     var check=false
+                    
                     for (var j=0;j<tags.length;j++){
                       if (districtName==tags[j]){
                         check=true
@@ -129,6 +130,7 @@ Page({
                     
                   }
                   if (content.length == 0) {
+                    
                     for (var i = 0; i < contentsList.length; i++) {
                       var content_ = contentsList[i]
                       content.push(content_)
