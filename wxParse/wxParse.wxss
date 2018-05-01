@@ -83,6 +83,16 @@ view{
     word-break:break-all;
     overflow:auto;
 }
+.edui-faked-video{
+    text-align: center;
+    margin: 0 auto;
+}
+.wxParse-embed{
+  width:100%;
+}
+.wxParse-embed-video{
+    width:100%;
+}
 
 .wxParse-video{
     text-align: center;
