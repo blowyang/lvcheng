@@ -114,21 +114,34 @@ Page({
                 var content = [];
                 if (res.data.code == 0) {
                   var contentsList = res.data.data
+                  var topContent=null
                   for (var i = 0; i < contentsList.length; i++) {
                     var content_ = contentsList[i]
                     var tags = content_.tags.split(',');
-                    var check=false
+                    var checkDistrict=false
                     
                     for (var j=0;j<tags.length;j++){
                       if (districtName==tags[j]){
-                        check=true
+                        checkDistrict=true
                       }
                     }
-                    if(check){
-                      content.push(content_);
+                    if (checkDistrict){                      
+                      if (content_.title == app.globalData.shopname){
+                        topContent=content_
+                      }else{
+                        content.push(content_);
+                      }
                     }
                     
                   }
+                  if (topContent!=null){
+                    var temContent=[]
+                    temContent.push(topContent)
+                    for (var j = 0; j < content.length;j++){
+                      temContent.push(content[j])
+                    }
+                    content = temContent
+                  }                  
                   if (content.length == 0) {
                     
                     for (var i = 0; i < contentsList.length; i++) {
