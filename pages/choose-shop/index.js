@@ -130,12 +130,22 @@ Page({
       })
 
       wx.switchTab({
-        url: '/pages/classification/index'
+        url: '/pages/classification/index',
+        success:function(e){
+          var page=getCurrentPages().pop()
+          if(page==undefined||page==null) return
+          page.onLoad()
+        }
       })
 
     },function(res){
       wx.switchTab({
-        url: '/pages/classification/index'
+        url: '/pages/classification/index',
+        success: function (e) {
+          var page = getCurrentPages().pop()
+          if (page == undefined || page == null) return
+          page.onLoad()
+        }
       })
     })       
   },

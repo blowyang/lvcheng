@@ -38,7 +38,7 @@ Page({
     wx.stopPullDownRefresh() //停止下拉刷新
   },
   onLoad: function (options) {
-    //console.log("onLoad")
+    console.log("onLoad")
     var that = this
     that.setData({
       shopname: app.globalData.shopname,
@@ -52,7 +52,7 @@ Page({
     })
     //var shopId = app.globalData.shopId
     //that.getGoods(0, shopId)
-  
+    that.reLoad()
     wx.setNavigationBarTitle({
       title: wx.getStorageSync('mallName')
     })
@@ -88,7 +88,7 @@ Page({
       shopname: app.globalData.shopname,
       shopLogo: app.globalData.shopLogo
     })
-    that.reLoad()
+    //that.reLoad()
     that.getPrompt();
     that.getDelivery();
   },
