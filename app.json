@@ -26,7 +26,8 @@
     "pages/topic-list/index",
     "pages/topic/index",
     "pages/kanjia-goods/index",
-    "pages/kanjia/index"
+    "pages/kanjia/index",
+    "pages/ucenter/index_/index"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -62,7 +63,7 @@
       "text": "购物车"
     },
     {
-      "pagePath": "pages/ucenter/index/index",
+      "pagePath": "pages/ucenter/index_/index",
       "iconPath": "images/nav/my-off.png",
       "selectedIconPath": "images/nav/my-on.png",
       "text": "我的"
