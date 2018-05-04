@@ -26,7 +26,7 @@ Page({
     var that = this
     that.getNotice();
     wx.setNavigationBarTitle({
-      title: '旅程专栏',
+      title: '专栏',
     })
     /*
     //调用应用实例的方法获取全局数据
