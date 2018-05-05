@@ -134,7 +134,7 @@ Page({
         success:function(e){
           var page=getCurrentPages().pop()
           if(page==undefined||page==null) return
-          page.onLoad()
+          page.reLoad()
         }
       })
 

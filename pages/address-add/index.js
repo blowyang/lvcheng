@@ -264,6 +264,104 @@ Page({
   },
   readFromWx: function () {
     let that = this;
+    wx.getSetting({
+      success: (res) => {
+        
+        console.log(res)
+        if (res.authSetting['scope.address'] != undefined && res.authSetting['scope.address'] != true) {
+          wx.showModal({
+            title: '是否授权获取地址',
+            content: '需要获取您的地址，请确认授权，否则该功能将无法使用',
+            success: function (res_) {
+              console.log(res_)
+              if (res_.confirm) {
+                wx.openSetting({
+                  success: (res) => {
+                    if (res.authSetting["scope.address"] == true){
+                      wx.showToast({
+                        title: '授权成功',
+                        icon: 'success',
+                        duration: 1000
+                      })
+                    }else{
+                      wx.showToast({
+                        title: '授权失败',
+                        icon: 'success',
+                        duration: 1000})
+                    }                  
+                  }
+                })
+              }else{
+                wx.showToast({
+                  title: '没有授权',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+              
+            }
+          })
+        }else{
+          wx.chooseAddress({
+            success: function (res) {
+              let provinceName = res.provinceName;
+              let cityName = res.cityName;
+              let diatrictName = res.countyName;
+              let retSelIdx = 0;
+              for (var i = 0; i < commonCityData.cityData.length; i++) {
+                if (provinceName == commonCityData.cityData[i].name) {
+                  that.data.selProvinceIndex = i;
+                  for (var j = 0; j < commonCityData.cityData[i].cityList.length; j++) {
+                    if (cityName == commonCityData.cityData[i].cityList[j].id) {
+                      that.data.selCityIndex = j;
+                      for (var k = 0; k < commonCityData.cityData[i].cityList[j].districtList.length; k++) {
+                        if (diatrictName == commonCityData.cityData[i].cityList[j].districtList[k].id) {
+                          that.data.selDistrictIndex = k;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              that.setData({
+                wxaddress: res,
+                selProvince: provinceName,
+                selCity: cityName,
+                selDistrict: diatrictName
+              });
+            }
+          })
+        }
+      }
+    })
+    
+  }
+  /*
+  readFromWx: function () {
+    let that = this;
+    wx.getSetting({
+      success: (res) => {
+        
+        console.log(res)
+        if(res.authSetting['scope.address'] != undefined && res.authSetting['scope.address'] != true){
+          wx.showModal({
+            title: '是否授权获取地址',
+            content: '需要获取您的地址，请确认授权，否则该功能将无法使用',
+            success:function(res_){
+              if(res_.confirm){
+                wx.authorize({
+                  scope: 'scope.address',
+                  success:function(){
+                    console.log('用户同意授权获得地址')
+                  }
+                })
+              }
+            }
+          })
+        }
+      }
+    })
     wx.chooseAddress({
       success: function (res) {
         let provinceName = res.provinceName;
@@ -295,4 +393,5 @@ Page({
       }
     })
   }
+  */
 })
