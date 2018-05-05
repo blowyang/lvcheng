@@ -6,8 +6,10 @@ var amapFile = require('/libs/amap-wx.js');
 var config = require('/libs/config.js');
 App({
   onLaunch: function () {
+
     var that = this;
     //获取最近的店面信息
+    /*
     var key = config.Config.key;
     var myAmapFun = new amapFile.AMapWX({ key: key });
     myAmapFun.getRegeo({
@@ -73,6 +75,7 @@ App({
         }, function (res) { that.globalData.distance = distance})
       }
     })
+    */
     //  获取商城名称
     wx.request({
       url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
@@ -96,7 +99,7 @@ App({
           }
         }
         that.globalData.categories = categories
-        that.getGoods(0,0);//获取全品类商品
+        //that.getGoods(0,0);//获取全品类商品
       },
       fail: function () {
         that.globalData.onLoadStatus = false
@@ -233,85 +236,6 @@ App({
       })
     }
     
-  },
-  getGoods: function (categoryId,shopId) {
-    if (categoryId == 0) {
-      categoryId = "";
-    }
-    //console.log(categoryId)
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/list',
-      data: {
-        page: that.globalData.page,
-        pageSize: that.globalData.pageSize,
-        categoryId: categoryId,
-        shopId: shopId
-      },
-      success: function (res) {
-        that.globalData.goods = []
-        var goods = [];
-
-        if (res.data.code != 0 || res.data.data.length == 0) {
-          /*that.setData({
-            prePageBtn: false,
-            nextPageBtn: true,
-            toBottom: true
-          });*/
-          return;
-        }
-
-        for (var i = 0; i < res.data.data.length; i++) {
-          goods.push(res.data.data[i]);
-        }
-
-
-        //console.log('goods----------------------')
-        //console.log(goods)
-
-        var page = that.globalData.page;
-        var pageSize = that.globalData.pageSize;
-        for (let i = 0; i < goods.length; i++) {
-          goods[i].starscore = (goods[i].numberGoodReputation / goods[i].numberOrders) * 5
-          goods[i].starscore = Math.ceil(goods[i].starscore / 0.5) * 0.5
-          goods[i].starpic = starscore.picStr(goods[i].starscore)
-        }
-        that.globalData.goods = goods
-        var categories = that.globalData.categories
-        var goodsList = [],
-          id,
-          key,
-          name,
-          typeStr,
-          goodsTemp = []
-        for (let i = 0; i < categories.length; i++) {
-          id = categories[i].id;
-          key = categories[i].key;
-          name = categories[i].name;
-          typeStr = categories[i].type;
-          goodsTemp = [];
-          for (let j = 0; j < goods.length; j++) {
-            if (goods[j].categoryId === id) {
-              goodsTemp.push(goods[j])
-            }
-          }
-          if ((that.globalData.activeCategoryId === null) & (goodsTemp.length > 0)) {
-            that.globalData.activeCategoryId = categories[i].id
-          }
-          goodsList.push({ 'id': id, 'key': key, 'name': name, 'type': typeStr, 'goods': goodsTemp })
-          //console.log("你好," + categories[i].name)
-        }
-
-        that.globalData.goodsList = goodsList
-        that.globalData.onLoadStatus = true
-        //console.log('getGoodsReputation----------------------')
-        //console.log(that.globalData.goods)
-      },
-      fail: function () {
-        that.globalData.onLoadStatus = false
-        console.log('33')
-      }
-    })
   },
   globalData:{
     hotGoods: ['帝王蟹', '龙虾', '银鱼', '鲍鱼', '生蚝'],

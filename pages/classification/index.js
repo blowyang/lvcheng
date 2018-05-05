@@ -40,19 +40,135 @@ Page({
   onLoad: function (options) {
     console.log("onLoad")
     var that = this
-    that.setData({
-      shopname: app.globalData.shopname,
-      categories: app.globalData.categories,
-      goods: app.globalData.goods,
-      goodsList: app.globalData.goodsList,
-      onLoadStatus: app.globalData.onLoadStatus,
-      //onLoadStatus: false,
-      activeCategoryId: app.globalData.activeCategoryId,
-      shopLogo: app.globalData.shopLogo
+    wx.getSetting({
+      success:(res)=>{
+        if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true){
+          wx.showModal({
+            title: '是否授权获取位置',
+            content: '需要获取您的位置，请确认授权，否则将无法显示最近的店面',
+            success:function(res){
+              if (res.confirm){
+                wx.openSetting({
+                  success:function(res){
+                    if (res.authSetting["scope.userLocation"] == true){
+                      wx.showToast({
+                        title: '授权成功',
+                        icon: 'success',
+                        duration: 1000
+                      })
+                      that.onLoad()
+                    }else{
+                      wx.showToast({
+                        title: '展示默认店面',
+                        icon: 'success',
+                        duration: 3000
+                      })
+                      that.reLoad()
+                    }
+                  }
+                })
+              }else{
+                wx.showToast({
+                  title: '展示默认店面',
+                  icon: 'success',
+                  duration: 3000
+                })
+                that.reLoad()
+              }
+            }
+          })
+        }else{
+          //获取最近的店面信息
+          var key = config.Config.key;
+          var myAmapFun = new amapFile.AMapWX({ key: key });
+          myAmapFun.getRegeo({
+            success: function (geo) {
+              //获取我所在位置
+              var latitude = geo[0].latitude
+              var longitude = geo[0].longitude
+              var province = geo[0].regeocodeData.addressComponent.province;
+              var city = geo[0].regeocodeData.addressComponent.city;
+              var district = geo[0].regeocodeData.addressComponent.district;
+              app.globalData.provinceName = province
+              app.globalData.cityName = city
+              app.globalData.districtName = district
+
+              var placeId = app.func.getPlaceId(province, city, district)
+              var params = new Object()
+              params.provinceId = placeId.provinceId
+              params.cityId = placeId.cityId
+              params.districtId = placeId.districtId
+              //获取所在位置所在区的店面，并找到最近店面
+
+              app.func.request('/zhiwei/shop/subshop/list', params, function (res) {
+                var shopname = app.globalData.shopname
+                var shopaddress = app.globalData.shopaddress
+                var shopLogo = app.globalData.shopLogo
+                var shopId = app.globalData.shopId
+                var shoplatitude = app.globalData.shoplatitude
+                var shoplongitude = app.globalData.shoplongitude
+                var distance = app.func.getDistance(latitude, longitude, shoplatitude, shoplongitude)
+                if (res.code != 0) {
+                  app.globalData.distance = distance
+                  //console.log(distance)
+                  return
+                }
+                var shops = res.data
+
+                if (shops.length > 0) {
+                  for (var i = 0; i < shops.length; i++) {
+                    var shop = shops[i]
+                    var temlatitude = shop.latitude
+                    var temlongitude = shop.longitude
+                    var temdistance = app.func.getDistance(latitude, longitude, temlatitude, temlongitude)
+                    if (temdistance < distance) {
+                      shopId = shop.id
+                      shopname = shop.name
+                      shopaddress = shop.address
+                      shopLogo = shop.pic
+                      distance = temdistance
+                      shoplatitude = temlatitude
+                      shoplongitude = temlongitude
+                    }
+                  }
+                }
+
+                //找到店面后更新店面信息shopLogo
+                app.globalData.shopId = shopId
+                app.globalData.shopname = shopname
+                app.globalData.shopaddress = shopaddress
+                app.globalData.shopLogo = shopLogo
+                app.globalData.distance = distance
+                app.globalData.shoplatitude = shoplatitude
+                app.globalData.shoplongitude = shoplongitude
+                //设置参数
+                that.setData({
+                  shopname: app.globalData.shopname,
+                  categories: app.globalData.categories,
+                  goods: app.globalData.goods,
+                  goodsList: app.globalData.goodsList,
+                  onLoadStatus: app.globalData.onLoadStatus,
+                  //onLoadStatus: false,
+                  activeCategoryId: app.globalData.activeCategoryId,
+                  shopLogo: app.globalData.shopLogo
+                })
+                //获取商品
+                that.reLoad()
+              }, function (res) { app.globalData.distance = distance })
+            }
+          })
+          //console.log('此前已经授权获取位置成功')
+        }
+      },
+      fail:(res)=>{
+        wx.showToast({
+          title: '展示默认店面',
+          icon: 'success',
+          duration: 3000
+        })
+        that.reLoad()
+      }
     })
-    //var shopId = app.globalData.shopId
-    //that.getGoods(0, shopId)
-    that.reLoad()
     wx.setNavigationBarTitle({
       title: wx.getStorageSync('mallName')
     })
@@ -127,10 +243,11 @@ Page({
   },
   reLoad: function () {
     var that = this
+    /*
     wx.showLoading({
       title: '努力加载中···',
       mask: true,
-    });
+    })*/
    
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/category/all',
@@ -153,8 +270,8 @@ Page({
         that.setData({
           onLoadStatus: false,
         })
-        wx.hideLoading()
-        console.log('11')
+        //wx.hideLoading()
+        //console.log('11')
       }
     })
   },
@@ -257,11 +374,12 @@ Page({
             app.globalData.goodsList = goodsList
             //console.log('yang')
             //console.log(app.globalData.goods)
+            /*
             wx.showToast({
               title: '所有商品加载完成',
               icon: 'success',
               duration: 1000,
-            })
+            })*/
           },
           fail:function(){
             that.setData({

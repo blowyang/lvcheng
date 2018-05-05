@@ -287,7 +287,8 @@ Page({
                       wx.showToast({
                         title: '授权失败',
                         icon: 'success',
-                        duration: 1000})
+                        duration: 1000
+                      })
                     }                  
                   }
                 })
