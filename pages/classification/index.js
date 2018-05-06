@@ -56,7 +56,7 @@ Page({
                         icon: 'success',
                         duration: 1000
                       })
-                      that.onLoad()
+                      that.getNearestShop()
                     }else{
                       wx.showToast({
                         title: '展示默认店面',
@@ -79,84 +79,8 @@ Page({
           })
         }else{
           //获取最近的店面信息
-          var key = config.Config.key;
-          var myAmapFun = new amapFile.AMapWX({ key: key });
-          myAmapFun.getRegeo({
-            success: function (geo) {
-              //获取我所在位置
-              var latitude = geo[0].latitude
-              var longitude = geo[0].longitude
-              var province = geo[0].regeocodeData.addressComponent.province;
-              var city = geo[0].regeocodeData.addressComponent.city;
-              var district = geo[0].regeocodeData.addressComponent.district;
-              app.globalData.provinceName = province
-              app.globalData.cityName = city
-              app.globalData.districtName = district
-
-              var placeId = app.func.getPlaceId(province, city, district)
-              var params = new Object()
-              params.provinceId = placeId.provinceId
-              params.cityId = placeId.cityId
-              params.districtId = placeId.districtId
-              //获取所在位置所在区的店面，并找到最近店面
-
-              app.func.request('/zhiwei/shop/subshop/list', params, function (res) {
-                var shopname = app.globalData.shopname
-                var shopaddress = app.globalData.shopaddress
-                var shopLogo = app.globalData.shopLogo
-                var shopId = app.globalData.shopId
-                var shoplatitude = app.globalData.shoplatitude
-                var shoplongitude = app.globalData.shoplongitude
-                var distance = app.func.getDistance(latitude, longitude, shoplatitude, shoplongitude)
-                if (res.code != 0) {
-                  app.globalData.distance = distance
-                  //console.log(distance)
-                  return
-                }
-                var shops = res.data
-
-                if (shops.length > 0) {
-                  for (var i = 0; i < shops.length; i++) {
-                    var shop = shops[i]
-                    var temlatitude = shop.latitude
-                    var temlongitude = shop.longitude
-                    var temdistance = app.func.getDistance(latitude, longitude, temlatitude, temlongitude)
-                    if (temdistance < distance) {
-                      shopId = shop.id
-                      shopname = shop.name
-                      shopaddress = shop.address
-                      shopLogo = shop.pic
-                      distance = temdistance
-                      shoplatitude = temlatitude
-                      shoplongitude = temlongitude
-                    }
-                  }
-                }
-
-                //找到店面后更新店面信息shopLogo
-                app.globalData.shopId = shopId
-                app.globalData.shopname = shopname
-                app.globalData.shopaddress = shopaddress
-                app.globalData.shopLogo = shopLogo
-                app.globalData.distance = distance
-                app.globalData.shoplatitude = shoplatitude
-                app.globalData.shoplongitude = shoplongitude
-                //设置参数
-                that.setData({
-                  shopname: app.globalData.shopname,
-                  categories: app.globalData.categories,
-                  goods: app.globalData.goods,
-                  goodsList: app.globalData.goodsList,
-                  onLoadStatus: app.globalData.onLoadStatus,
-                  //onLoadStatus: false,
-                  activeCategoryId: app.globalData.activeCategoryId,
-                  shopLogo: app.globalData.shopLogo
-                })
-                //获取商品
-                that.reLoad()
-              }, function (res) { app.globalData.distance = distance })
-            }
-          })
+          //console.log('此前已授权获取位置')
+          that.getNearestShop()
           //console.log('此前已经授权获取位置成功')
         }
       },
@@ -183,6 +107,89 @@ Page({
       }
     })
     //console.log(this.width, this.height)
+  },
+  getNearestShop:function(){
+    var that=this
+    //获取最近的店面信息
+    var key = config.Config.key;
+    var myAmapFun = new amapFile.AMapWX({ key: key });
+    myAmapFun.getRegeo({
+      success: function (geo) {
+        //获取我所在位置
+        var latitude = geo[0].latitude
+        var longitude = geo[0].longitude
+        var province = geo[0].regeocodeData.addressComponent.province;
+        var city = geo[0].regeocodeData.addressComponent.city;
+        var district = geo[0].regeocodeData.addressComponent.district;
+        app.globalData.provinceName = province
+        app.globalData.cityName = city
+        app.globalData.districtName = district
+
+        var placeId = app.func.getPlaceId(province, city, district)
+        var params = new Object()
+        params.provinceId = placeId.provinceId
+        params.cityId = placeId.cityId
+        params.districtId = placeId.districtId
+        //获取所在位置所在区的店面，并找到最近店面
+
+        app.func.request('/zhiwei/shop/subshop/list', params, function (res) {
+          var shopname = app.globalData.shopname
+          var shopaddress = app.globalData.shopaddress
+          var shopLogo = app.globalData.shopLogo
+          var shopId = app.globalData.shopId
+          var shoplatitude = app.globalData.shoplatitude
+          var shoplongitude = app.globalData.shoplongitude
+          var distance = app.func.getDistance(latitude, longitude, shoplatitude, shoplongitude)
+          if (res.code != 0) {
+            app.globalData.distance = distance
+            //console.log(distance)
+            return
+          }
+          var shops = res.data
+
+          if (shops.length > 0) {
+            for (var i = 0; i < shops.length; i++) {
+              var shop = shops[i]
+              var temlatitude = shop.latitude
+              var temlongitude = shop.longitude
+              var temdistance = app.func.getDistance(latitude, longitude, temlatitude, temlongitude)
+              if (temdistance < distance) {
+                shopId = shop.id
+                shopname = shop.name
+                shopaddress = shop.address
+                shopLogo = shop.pic
+                distance = temdistance
+                shoplatitude = temlatitude
+                shoplongitude = temlongitude
+              }
+            }
+          }
+
+          //找到店面后更新店面信息shopLogo
+          app.globalData.shopId = shopId
+          app.globalData.shopname = shopname
+          app.globalData.shopaddress = shopaddress
+          app.globalData.shopLogo = shopLogo
+          app.globalData.distance = distance
+          app.globalData.shoplatitude = shoplatitude
+          app.globalData.shoplongitude = shoplongitude
+          //设置参数
+          that.setData({
+            shopname: app.globalData.shopname,
+            categories: app.globalData.categories,
+            goods: app.globalData.goods,
+            goodsList: app.globalData.goodsList,
+            onLoadStatus: app.globalData.onLoadStatus,
+            //onLoadStatus: false,
+            activeCategoryId: app.globalData.activeCategoryId,
+            shopLogo: app.globalData.shopLogo
+          })
+          //获取商品
+          that.reLoad()
+        }, function (res) { app.globalData.distance = distance })
+      }
+    })  
+
   },
   onShareAppMessage: function () {
     return {

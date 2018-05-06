@@ -6,76 +6,7 @@ var amapFile = require('/libs/amap-wx.js');
 var config = require('/libs/config.js');
 App({
   onLaunch: function () {
-
     var that = this;
-    //获取最近的店面信息
-    /*
-    var key = config.Config.key;
-    var myAmapFun = new amapFile.AMapWX({ key: key });
-    myAmapFun.getRegeo({
-      success: function (geo) {
-        //获取我所在位置
-        var latitude = geo[0].latitude
-        var longitude = geo[0].longitude
-        var province = geo[0].regeocodeData.addressComponent.province;
-        var city = geo[0].regeocodeData.addressComponent.city;
-        var district = geo[0].regeocodeData.addressComponent.district;
-        that.globalData.provinceName = province
-        that.globalData.cityName = city
-        that.globalData.districtName = district
-        
-        var placeId = that.func.getPlaceId(province, city, district)
-        var params = new Object()
-        params.provinceId = placeId.provinceId
-        params.cityId = placeId.cityId
-        params.districtId = placeId.districtId
-        //获取所在位置所在区的店面，并找到最近店面
-
-        that.func.request('/zhiwei/shop/subshop/list', params, function (res) {
-          var shopname = that.globalData.shopname
-          var shopaddress = that.globalData.shopaddress
-          var shopLogo = that.globalData.shopLogo
-          var shopId = that.globalData.shopId
-          var shoplatitude = that.globalData.shoplatitude
-          var shoplongitude = that.globalData.shoplongitude
-          var distance = that.func.getDistance(latitude, longitude, shoplatitude, shoplongitude)
-          if (res.code != 0) {    
-            that.globalData.distance = distance
-            //console.log(distance)
-            return
-          }
-          var shops = res.data
-          
-          if (shops.length > 0) {
-            for (var i = 0; i < shops.length; i++) {
-              var shop = shops[i]
-              var temlatitude = shop.latitude
-              var temlongitude = shop.longitude
-              var temdistance = that.func.getDistance(latitude, longitude, temlatitude, temlongitude)
-              if (temdistance < distance) {
-                shopId = shop.id
-                shopname=shop.name
-                shopaddress=shop.address
-                shopLogo = shop.pic
-                distance = temdistance
-                shoplatitude = temlatitude
-                shoplongitude = temlongitude
-              }
-            }
-          }
-          
-          //找到店面后更新店面信息shopLogo
-          that.globalData.shopId = shopId
-          that.globalData.shopname = shopname
-          that.globalData.shopaddress = shopaddress
-          that.globalData.shopLogo = shopLogo
-          that.globalData.distance = distance
-          that.globalData.shoplatitude = shoplatitude
-          that.globalData.shoplongitude = shoplongitude          
-        }, function (res) { that.globalData.distance = distance})
-      }
-    })
-    */
     //  获取商城名称
     wx.request({
       url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
