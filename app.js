@@ -74,7 +74,7 @@ App({
           data: {
             code: res.code
           },
-          success: function(res) {
+          success: function(res) {           
             if (res.data.code == 10000) {
               // 去注册
               that.registerUser();
@@ -113,6 +113,7 @@ App({
               url: 'https://api.it120.cc/' + that.globalData.subDomain +'/user/wxapp/register/complex',
               data: {code:code,encryptedData:encryptedData,iv:iv}, // 设置请求的 参数
               success: (res) =>{
+                console.log(res)
                 wx.hideLoading();
                 that.login();
               }

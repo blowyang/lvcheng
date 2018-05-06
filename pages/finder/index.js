@@ -140,13 +140,11 @@ Page({
           that.setData({
             couponsTitlePicStr: res.data.data.value
           })
-          console.log('couponsTitlePicStr------------------')
-          console.log(res.data.data.value)
-          console.log('ok')
+          
         }
       },
       fail: function () {
-        console.log('fail')
+        
       },
     })
   },
@@ -167,57 +165,7 @@ Page({
       url: '/pages/search/index?keyword=' + this.data.keyword,
     })
   },
-  /*
-  getGoodsList: function (categoryId) {
-    if (categoryId == 0) {
-      categoryId = "";
-    }
-    console.log(categoryId)
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/shop/goods/list',
-      data: {
-        page: that.data.page,
-        pageSize: that.data.pageSize,
-        categoryId: categoryId
-      },
-      success: function (res) {
-        that.setData({
-          goods: [],
-          loadingMoreHidden: true
-        });
-        var goods = [];
-        if (res.data.code != 0 || res.data.data.length == 0) {
-          that.setData({
-            loadingMoreHidden: false,
-            prePageBtn: false,
-            nextPageBtn: true,
-            toBottom: true
-          });
-          return;
-        }
-        for (var i = 0; i < res.data.data.length; i++) {
-          goods.push(res.data.data[i]);
-        }
-
-
-        console.log('getGoodsList----------------------')
-        console.log(goods)
-
-
-        for (let i = 0; i < goods.length; i++) {
-          goods[i].starscore = (goods[i].numberGoodReputation / goods[i].numberOrders) * 5
-          goods[i].starscore = Math.ceil(goods[i].starscore / 0.5) * 0.5
-          goods[i].starpic = starscore.picStr(goods[i].starscore)
-          
-        }
-        console.log('getGoodsReputation----------------------')
-        console.log(goods)
-
-      }
-    })
-  },
-  */
+  
   getCoupons: function () {
     wx.showLoading({
       title: '获取优惠券中···',
@@ -290,6 +238,20 @@ Page({
             title: '错误',
             content: '已过期~',
             showCancel: false
+          })
+          return;
+        }
+        if (res.data.code == 10000) {
+          
+          wx.switchTab({
+            url: '/pages/ucenter/index/index',
+            success: function () {
+              wx.showToast({
+                title: '请登录',
+                icon: 'success',
+                duration: 2000
+              })
+            }
           })
           return;
         }

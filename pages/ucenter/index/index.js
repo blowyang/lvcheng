@@ -238,8 +238,31 @@ Page({
         })
       },
       fail(res) {
-        console.log(res);
-        wx.openSetting({});
+        wx.openSetting({
+          success:function(res){
+            if (res.authSetting["scope.userInfo"] == true){
+              app.globalData.token = null;
+              app.login();
+              wx.showModal({
+                title: '提示',
+                content: '重新登陆成功',
+                showCancel: false,
+                success: function (res) {
+                  if (res.confirm) {
+                    that.onShow();
+                  }
+                }
+              })
+            }else{
+              wx.showModal({
+                title: '提示',
+                content: '重新登陆失败',
+                showCancel: false,
+                
+              })
+            }
+          }
+        });
       }
     })
   },
