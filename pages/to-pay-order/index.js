@@ -125,6 +125,21 @@ Page({
       data: postData, // 设置请求的 参数
       success: (res) => {
         wx.hideLoading();
+        if (res.data.code == 10000) {
+
+          wx.switchTab({
+            url: '/pages/ucenter/index/index',
+            success: function () {
+              wx.showToast({
+                title: '请登录',
+                icon: 'success',
+                duration: 2000
+              })
+            }
+          })
+          return;
+        }
+        
         if (res.data.code != 0) {
           wx.showModal({
             title: '错误',
