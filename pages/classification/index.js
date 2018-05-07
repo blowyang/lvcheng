@@ -141,8 +141,10 @@ Page({
           var shoplongitude = app.globalData.shoplongitude
           var distance = app.func.getDistance(latitude, longitude, shoplatitude, shoplongitude)
           if (res.code != 0) {
+            //客户所在区域没有商铺，则显示默认店面，并设置到店距离
             app.globalData.distance = distance
             //console.log(distance)
+            that.reLoad()
             return
           }
           var shops = res.data
