@@ -104,6 +104,20 @@ Page({
         isDefault: 'true'
       },
       success: function (res) {
+        if (res.data.code == 10000) {
+
+          wx.switchTab({
+            url: '/pages/ucenter/index/index',
+            success: function () {
+              wx.showToast({
+                title: '请登录',
+                icon: 'success',
+                duration: 2000
+              })
+            }
+          })
+          return;
+        }
         if (res.data.code != 0) {
           // 登录错误 
           wx.hideLoading();
