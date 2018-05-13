@@ -345,6 +345,7 @@ Page({
               goods: goods,
             });
             var categories = that.data.categories
+            var temCategories=[]
             var goodsList = [],
               id,
               key,
@@ -360,10 +361,15 @@ Page({
                   goodsTemp.push(goods[j])
                 }
               }
-              goodsList.push({ 'id': id, 'key': key, 'name': name, 'goods': goodsTemp })
+              if (goodsTemp.length>0){
+                temCategories.push(categories[i])
+                goodsList.push({ 'id': id, 'key': key, 'name': name, 'goods': goodsTemp })
+              }
+              
               //console.log("你好," + categories[i].name)
             }
             that.setData({
+              categories: temCategories,
               goodsList: goodsList,
               onLoadStatus: true,
               activeCategoryId: categories[0].id,
@@ -377,6 +383,7 @@ Page({
                 hotGoods.push(good.name)
               }
             }
+            app.globalData.categories = temCategories
             app.globalData.goodsName = goodsName
             app.globalData.hotGoods = hotGoods
             app.globalData.goods=goods
