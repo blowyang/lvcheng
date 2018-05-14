@@ -368,8 +368,9 @@ Page({
               
               //console.log("你好," + categories[i].name)
             }
+            categories=temCategories
             that.setData({
-              categories: temCategories,
+              categories: categories,
               goodsList: goodsList,
               onLoadStatus: true,
               activeCategoryId: categories[0].id,
@@ -383,7 +384,7 @@ Page({
                 hotGoods.push(good.name)
               }
             }
-            app.globalData.categories = temCategories
+            app.globalData.categories = categories
             app.globalData.goodsName = goodsName
             app.globalData.hotGoods = hotGoods
             app.globalData.goods=goods
